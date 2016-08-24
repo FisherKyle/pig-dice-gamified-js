@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Piggly Dice</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.slim.js"
+    integrity="sha256-L6ppAjL6jgtRmfiuigeEE5AwNI2pH/X9IBbPyanJeZw=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src='js/scripts.js'>
+    </script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+      <div class="container">
+        <h1>Address Book</h1>
+        <div class="row">
+          <div class="col-md-4">
+            <div>
+              <h2 class="left-player">Total: <span id='p1-game-total'></span></h2>
+              <ul id="p1-combinedResults">
+
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <h2>Roll the die or hold the die: </h2>
+            <button id='roll' class='btn btn-default'>ROLL</button>
+            <button id="hold" class="btn btn-success">HOLD</button>
+            <h4 id='roll-result'></h4>
+          </div>
+
+          <div class="col-md-4">
+            <div>
+              <h2 class="right-player">Total: <span id='p2-game-total'></span></h2>
+              <ul id="p2-combinedResults">
+
+              </ul>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </body>
+  </html>

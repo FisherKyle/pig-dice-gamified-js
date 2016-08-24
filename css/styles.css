@@ -1,0 +1,18 @@
+h2 {
+  text-align: center;
+}
+
+/*.left-player {
+  background-color: #804000;
+  border-radius: 10px;
+}
+
+.right-player {
+  background-color: #804000;
+  border-radius: 10px;
+}*/
+
+.active {
+  background-color: #804000;
+  border-radius: 10px;
+}
