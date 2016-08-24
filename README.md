@@ -38,9 +38,9 @@ Contact kyle@kylefisher.com or peter.armington@gmail.com for more information.
 * If the user rolls a one, their turn total will be reduced to 0, they will be alerted, and their turn ends.
   * example input: player 1 has a 7 and rolls a 1.
   * example output: "Sorry user, you rolled a 1. Your turn is over and you have added nothing to your total".
-* It will reset player's turn total to "0" when a "1" is rolled.
-  * example input: Player rolls a "3", a "2", and then a "1".
-  * example output: "3, 5, 0".
+* When either player's number is equal to or greater than 100 upon holding, the winning player will be alerted.
+  * example input: Player 2 has 94 and rolls a 7.
+  * example output: "Congratulations, player 2, you've won!" will be displayed.
 
 
 ### License

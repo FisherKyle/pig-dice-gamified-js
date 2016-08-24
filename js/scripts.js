@@ -2,43 +2,50 @@ function roll(){
   return Math.floor((Math.random() * 6) + 1);
 }
 
+function Player(name, turnTotal, gameTotal, boardSide) {
+  this.playerName = name;
+  this.turnTotal = turnTotal;
+  this.gameTotal = gameTotal;
+  this.boardSide = boardSide
+}
+
+var playerOne = new Player("one", 0, 0, "left-player");
+var playerTwo = new Player("two", 0, 0, "right-player");
+
+
+var activePlayer = playerOne;
+
 $(document).ready(function(){
   $('.left-player').addClass('active');
-  var player;
-  player = 1;
+
 
   function swapPlayer(){
-    if(player === 1){
-      player = 2;
+    if(active.playerName === playerOne.playerName){
+      activePlayer = playerTwo;
     }
     else{
-      player = 1;
+      activePlayer = playerOne;
     }
   }
-
-  var p1GameTotal = 0;
-  var p2GameTotal = 0;
 
   function endTurn(){
     console.log('end turn');
     if(player === 1){
-      p1GameTotal += turnTotal;
+      active.gameTotal += active.turnTotal;
       $('#p1-game-total').text(p1GameTotal);
       $('.right-player').addClass('active');
       $('.left-player').removeClass('active');
     }
-    else if(player === 2){
-      p2GameTotal += turnTotal;
-      $('#p2-game-total').text(p2GameTotal);
-      $('.right-player').removeClass('active');
-      $('.left-player').addClass('active');
-    }
 
     if(p1GameTotal >= 100){
       $('#mainDisplay').text("Congratulations player #1, you win!");
+      $('#hold').prop("disabled",true);
+      $('#roll').prop("disabled",true);
     }
     if(p2GameTotal >= 100){
       $('#mainDisplay').text("Congratulations player #2, you win!");
+      $('#hold').prop("disabled",true);
+      $('#roll').prop("disabled",true);
     }
 
     turnTotal = 0;
@@ -57,11 +64,11 @@ $(document).ready(function(){
     console.log('player ' + player + ': ' + turnTotal);
     var result = roll();
     if (result === 1) {
-      turnTotal = 0;
+      active.turnTotal = 0;
       $('#roll-result').text("You rolled a 1! Sorry!");
       endTurn();
     } else {
-      turnTotal += result;
+      active.turnTotal += result;
       $('#roll-result').text(result);
       $('#p' + player + '-combinedResults').append("<li>" + turnTotal + "</li>");
     }
