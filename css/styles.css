@@ -2,6 +2,14 @@ h2 {
   text-align: center;
 }
 
+h1 {
+  text-align: center;
+  background-color: #000066;
+  border-radius: 6px;
+  color: white;
+  padding-bottom: 2%;
+}
+
 /*.left-player {
   background-color: #804000;
   border-radius: 10px;
@@ -15,4 +23,22 @@ h2 {
 .active {
   background-color: #804000;
   border-radius: 10px;
+}
+
+#winning {
+  text-align: center;
+  font-size: 500%;
+  background-color: #1aff1a;
+  border-radius: 14px;
+}
+
+#replay {
+  display: none;
+  text-align: center;
+  margin: auto;
+  margin-top: 3%;
+}
+
+.container {
+  text-align: center;
 }

@@ -2,55 +2,103 @@ function roll(){
   return Math.floor((Math.random() * 6) + 1);
 }
 
-function Player(name, turnTotal, gameTotal, boardSide) {
+function Player(name, turnTotal, gameTotal, boardSide, robot) {
   this.playerName = name;
   this.turnTotal = turnTotal;
   this.gameTotal = gameTotal;
-  this.boardSide = boardSide
+  this.boardSide = boardSide;
+  this.robot = robot;
 }
 
-var playerOne = new Player("one", 0, 0, "left-player");
-var playerTwo = new Player("two", 0, 0, "right-player");
+
+var playerOne = new Player("Peter", 0, 0, "left-player", false);
+var playerTwo = new Player("Kyle", 0, 0, "right-player", true);
 
 
 var activePlayer = playerOne;
 
+var gameOver = false;
+
+function swapPlayer(){
+  console.log('swapping player');
+  if(activePlayer.playerName === playerOne.playerName){
+    activePlayer = playerTwo;
+  }
+  else{
+    activePlayer = playerOne;
+  }
+  console.log('active player is ' + activePlayer.playerName);
+
+  if(activePlayer.robot === true && gameOver === false){
+    console.log('processing robot');
+    activePlayer.processRobotTurn();
+  }
+}
+
 $(document).ready(function(){
-  $('.left-player').addClass('active');
 
-
-  function swapPlayer(){
-    if(active.playerName === playerOne.playerName){
-      activePlayer = playerTwo;
-    }
-    else{
-      activePlayer = playerOne;
+  function playerRolls(){
+    console.log('player ' + activePlayer.playerName + ' rolls')
+    var result = roll();
+    console.log('roll result was ' + result);
+    if (result === 1) {
+      console.log(activePlayer.playerName + ' rolled 1')
+      activePlayer.turnTotal = 0;
+      $('#roll-result').text("You rolled a 1! Sorry!");
+      endTurn();
+    } else {
+      activePlayer.turnTotal += result;
+      $('#roll-result').text(result);
+      $('.' + activePlayer.boardSide + ' ul').append("<li>" + activePlayer.turnTotal + "</li>");
     }
   }
 
+  function playerHolds(){
+    endTurn();
+  }
+
+  Player.prototype.processRobotTurn = function(){
+    playerRolls();
+    if(activePlayer.playerName === this.playerName){
+      playerRolls();
+    }
+    if(activePlayer.playerName === this.playerName){
+      playerHolds();
+    }
+  }
+
+  $('.left-player').addClass('active');
+
+  $('#replay').click(function() {
+    location.reload();
+  });
+
   function endTurn(){
-    console.log('end turn');
-    if(player === 1){
-      active.gameTotal += active.turnTotal;
-      $('#p1-game-total').text(p1GameTotal);
-      $('.right-player').addClass('active');
-      $('.left-player').removeClass('active');
-    }
+    console.log('end turn for ' + activePlayer.playerName);
+    console.log('turn total was ' + activePlayer.turnTotal);
 
-    if(p1GameTotal >= 100){
-      $('#mainDisplay').text("Congratulations player #1, you win!");
+    activePlayer.gameTotal += activePlayer.turnTotal;
+    $("." + activePlayer.boardSide + " h2 .game-total").text(activePlayer.gameTotal);
+    $("." + activePlayer.boardSide).removeClass('active');
+
+    if(activePlayer.gameTotal >= 100){
+      gameOver = true;
+      var victoryText;
+      if(activePlayer.robot){
+        victoryText = "Good job " + activePlayer.playerName + ", you got beat by a dumb robot that has four lines of code...";
+      } else {
+        victoryText = "Congratulations player " + activePlayer.playerName + ", you win!"
+      }
+      $('#winning').text(victoryText);
       $('#hold').prop("disabled",true);
       $('#roll').prop("disabled",true);
-    }
-    if(p2GameTotal >= 100){
-      $('#mainDisplay').text("Congratulations player #2, you win!");
-      $('#hold').prop("disabled",true);
-      $('#roll').prop("disabled",true);
+      $('#replay').show();
     }
 
-    turnTotal = 0;
-    $('#p' + player + '-combinedResults').empty();
+    $('.' + activePlayer.boardSide + ' ul').empty();
+    activePlayer.turnTotal = 0;
     swapPlayer();
+    $("." + activePlayer.boardSide).addClass('active');
   }
 
   $('#hold').click(function(){
@@ -61,17 +109,6 @@ $(document).ready(function(){
   //click button to roll die
 
   $('#roll').click(function(){
-    console.log('player ' + player + ': ' + turnTotal);
-    var result = roll();
-    if (result === 1) {
-      active.turnTotal = 0;
-      $('#roll-result').text("You rolled a 1! Sorry!");
-      endTurn();
-    } else {
-      active.turnTotal += result;
-      $('#roll-result').text(result);
-      $('#p' + player + '-combinedResults').append("<li>" + turnTotal + "</li>");
-    }
-
+    playerRolls();
   })
 })
