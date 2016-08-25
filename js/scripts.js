@@ -23,7 +23,7 @@ function swapPlayer(){
     activePlayer = playerOne;
   }
   console.log('active player is ' + activePlayer.playerName);
-
+  activePlayer.numRolls = 0;
   if(activePlayer.robot === true && gameOver === false){
     console.log('processing robot');
     activePlayer.processRobotTurn();
@@ -52,7 +52,7 @@ $(document).ready(function(){
       var result = roll();
       if (result === 1) {
         this.turnTotal = 0;
-        $('#roll-result').text("You rolled a 1! Sorry!");
+        $('#roll-result').text('You rolled a 1!');
         this.endTurn();
       } else {
         this.turnTotal += result;
@@ -66,13 +66,17 @@ $(document).ready(function(){
   }
 
   Player.prototype.processRobotTurn = function(){
-    this.playerRolls();
-    if (this.turnTotal != 0) {
+    setTimeout(function(){
       this.playerRolls();
-    }
-    if(this.turnTotal != 0){
-      this.playerHolds();
-    }
+      if(this != activePlayer){return;}
+      setTimeout(function(){
+        this.playerRolls();
+        if(this != activePlayer){return;}
+        setTimeout(function(){
+          this.playerHolds();
+        }.bind(this), 300);
+      }.bind(this),300);
+    }.bind(this),300);
   }
 
   $('.left-player').addClass('active');
