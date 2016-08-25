@@ -14,7 +14,6 @@ function Player(name, turnTotal, gameTotal, boardSide, robot) {
 var playerOne = new Player("Peter", 0, 0, "left-player", false);
 var playerTwo = new Player("Kyle", 0, 0, "right-player", true);
 
-
 var activePlayer = playerOne;
 
 var gameOver = false;
@@ -74,8 +73,6 @@ $(document).ready(function(){
   });
 
   function endTurn(){
-    console.log('end turn for ' + activePlayer.playerName);
-    console.log('turn total was ' + activePlayer.turnTotal);
 
     activePlayer.gameTotal += activePlayer.turnTotal;
     $("." + activePlayer.boardSide + " h2 .game-total").text(activePlayer.gameTotal);
@@ -85,13 +82,13 @@ $(document).ready(function(){
       gameOver = true;
       var victoryText;
       if(activePlayer.robot){
-        victoryText = "Good job " + activePlayer.playerName + ", you got beat by a dumb robot that has four lines of code...";
+        victoryText = "Good job, you got beat by a dumb robot that has four lines of code...";
       } else {
         victoryText = "Congratulations player " + activePlayer.playerName + ", you win!"
       }
       $('#winning').text(victoryText);
-      $('#hold').prop("disabled",true);
-      $('#roll').prop("disabled",true);
+      // $('#hold').prop("disabled",true);
+      // $('#roll').prop("disabled",true);
       $('#replay').show();
     }
 
@@ -104,9 +101,6 @@ $(document).ready(function(){
   $('#hold').click(function(){
     endTurn();
   });
-
-  var turnTotal = 0;
-  //click button to roll die
 
   $('#roll').click(function(){
     playerRolls();
