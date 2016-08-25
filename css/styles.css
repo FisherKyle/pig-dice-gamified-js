@@ -19,6 +19,13 @@ h1 {
   background-color: #804000;
   border-radius: 10px;
 }*/
+.left-player {
+  display: none;
+}
+
+.right-player {
+  display: none;
+}
 
 .active {
   background-color: #804000;
@@ -27,7 +34,7 @@ h1 {
 
 #winning {
   text-align: center;
-  font-size: 500%;
+  /*font-size: 500%;*/
   background-color: #1aff1a;
   border-radius: 14px;
 }
@@ -41,4 +48,28 @@ h1 {
 
 .container {
   text-align: center;
+}
+
+#nameOne {
+  min-width: 240px;
+}
+
+#nameTwo {
+  min-width: 240px;
+}
+
+.middleCol {
+  display: none;
+}
+
+input {
+  margin: 3%;
+}
+
+#startButton {
+  margin-bottom: 4%;
+}
+
+body {
+  background-color: #3d4d5c;
 }

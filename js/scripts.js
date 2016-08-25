@@ -10,11 +10,7 @@ function Player(name, turnTotal, gameTotal, boardSide, robot) {
   this.robot = robot;
 }
 
-
-var playerOne = new Player("Peter", 0, 0, "left-player", false);
-var playerTwo = new Player("Kyle", 0, 0, "right-player", true);
-
-var activePlayer = playerOne;
+var activePlayer, playerOne, playerTwo;
 
 var gameOver = false;
 
@@ -35,34 +31,47 @@ function swapPlayer(){
 }
 
 $(document).ready(function(){
+  $("#startButton").click(function(){
+    $('.middleCol').show();
+    $('.left-player').show();
+    $('.right-player').show();
+    $('#startButton').hide();
 
-  function playerRolls(){
-    console.log('player ' + activePlayer.playerName + ' rolls')
-    var result = roll();
-    console.log('roll result was ' + result);
-    if (result === 1) {
-      console.log(activePlayer.playerName + ' rolled 1')
-      activePlayer.turnTotal = 0;
-      $('#roll-result').text("You rolled a 1! Sorry!");
-      endTurn();
+    playerOne = new Player($("#nameOne").val(), 0, 0, "left-player", false);
+
+    if($("#nameTwo").val().length > 0){
+      playerTwo = new Player($("#nameTwo").val(), 0, 0, "right-player", false);
     } else {
-      activePlayer.turnTotal += result;
-      $('#roll-result').text(result);
-      $('.' + activePlayer.boardSide + ' ul').append("<li>" + activePlayer.turnTotal + "</li>");
+      playerTwo = new Player("bot", 0, 0, "right-player", true);
     }
+    activePlayer = playerOne;
+
+  })
+
+  Player.prototype.playerRolls = function(){
+      var result = roll();
+      if (result === 1) {
+        this.turnTotal = 0;
+        $('#roll-result').text("You rolled a 1! Sorry!");
+        this.endTurn();
+      } else {
+        this.turnTotal += result;
+        $('#roll-result').text(result);
+        $('.' + this.boardSide + ' ul').append("<li>" + this.turnTotal + "</li>");
+      }
   }
 
-  function playerHolds(){
-    endTurn();
+  Player.prototype.playerHolds = function(){
+    this.endTurn();
   }
 
   Player.prototype.processRobotTurn = function(){
-    playerRolls();
-    if(activePlayer.playerName === this.playerName){
-      playerRolls();
+    this.playerRolls();
+    if (this.turnTotal != 0) {
+      this.playerRolls();
     }
-    if(activePlayer.playerName === this.playerName){
-      playerHolds();
+    if(this.turnTotal != 0){
+      this.playerHolds();
     }
   }
 
@@ -72,19 +81,19 @@ $(document).ready(function(){
     location.reload();
   });
 
-  function endTurn(){
+  Player.prototype.endTurn = function(){
 
-    activePlayer.gameTotal += activePlayer.turnTotal;
-    $("." + activePlayer.boardSide + " h2 .game-total").text(activePlayer.gameTotal);
-    $("." + activePlayer.boardSide).removeClass('active');
+    this.gameTotal += this.turnTotal;
+    $("." + this.boardSide + " h2 .game-total").text(this.gameTotal);
+    $("." + this.boardSide).removeClass('active');
 
-    if(activePlayer.gameTotal >= 100){
+    if(this.gameTotal >= 100){
       gameOver = true;
       var victoryText;
-      if(activePlayer.robot){
+      if(this.robot){
         victoryText = "Good job, you got beat by a dumb robot that has four lines of code...";
       } else {
-        victoryText = "Congratulations player " + activePlayer.playerName + ", you win!"
+        victoryText = "Congratulations player " + this.playerName + ", you win!"
       }
       $('#winning').text(victoryText);
       // $('#hold').prop("disabled",true);
@@ -92,17 +101,17 @@ $(document).ready(function(){
       $('#replay').show();
     }
 
-    $('.' + activePlayer.boardSide + ' ul').empty();
-    activePlayer.turnTotal = 0;
+    $('.' + this.boardSide + ' ul').empty();
+    this.turnTotal = 0;
     swapPlayer();
     $("." + activePlayer.boardSide).addClass('active');
   }
 
   $('#hold').click(function(){
-    endTurn();
+    activePlayer.endTurn();
   });
 
   $('#roll').click(function(){
-    playerRolls();
+    activePlayer.playerRolls();
   })
 })

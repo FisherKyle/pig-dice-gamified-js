@@ -16,6 +16,7 @@
           <h1>Roll til ya fold.</h1>
           <div class="row">
             <div class="col-md-4">
+              <input type="text" id="nameOne" placeholder="Player one name here.">
               <div class='left-player'>
                 <h2 >Total: <span class='game-total'></span></h2>
                 <ul class="combinedResults">
@@ -25,14 +26,17 @@
             </div>
 
             <div class="col-md-4">
-              <h2 id="mainDisplay">Roll the die or hold the die: </h2>
-              <button id='roll' class='btn btn-default'>ROLL</button>
-              <button id="hold" class="btn btn-success">HOLD</button>
-              <h4 id='roll-result'></h4>
+              <div class="middleCol">
+                <h2 id="mainDisplay">Roll the die or hold the die: </h2>
+                <button id='roll' class='btn btn-default'>ROLL</button>
+                <button id="hold" class="btn btn-success">HOLD</button>
+                <h4 id='roll-result'></h4>
+              </div>
             </div>
 
 
             <div class="col-md-4">
+              <input type="text" id="nameTwo" placeholder="Player two name or leave blank for robot.">
               <div class="right-player">
                 <h2>Total: <span class='game-total'></span></h2>
                 <ul class="combinedResults">
@@ -43,6 +47,7 @@
 
 
           </div>
+          <button class="btn" id="startButton">Start!</button>
         </div>
         <button id="replay" type=btn>Again!</button>
       </div>
