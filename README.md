@@ -1,11 +1,14 @@
-# Pig
+# Piggly Dice Gamification
 
 #### Epicodus | 08.19.16
 ###### _By **Kyle Fisher** and **Peter Armington**_
 
+![sample screenshot](pigdice.png)
+
+
 ## **//** Description
 
-A front end app which simulates a game of pig dice.
+A front end app which simulates a game of pig dice. Players can continue to risk rolling a die or "holding" in an attempt to beat a competitor to 100 while avoiding rolling the number 1. For one to two players.
 
 ## **//** Installation Requirements/Instructions
 
